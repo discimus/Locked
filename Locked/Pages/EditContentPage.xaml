@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:util="clr-namespace:Locked.Utils"
+             x:Class="Locked.Pages.EditContentPage"
+             Title="EditContentPage">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,0,15,0" ColumnSpacing="12">
+            <Label
+                FontFamily="PoppinsSemiBold"
+                VerticalTextAlignment="Center"
+                FontSize="24"
+                TextColor="#10439F"
+                Text="Locked"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <VerticalStackLayout>
+        <Grid RowDefinitions="Auto,Auto,*" Padding="18,0">
+
+            <Editor 
+                Grid.Row="1" 
+                FontFamily="RobotoMedium"
+                HeightRequest="180" 
+                Text="{Binding NoteDescription}"
+                Placeholder="Type something..." />
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" Padding="18" >
+                <VerticalStackLayout>
+                    <Label
+                        FontFamily="MaterialDesignIconsWebfont"
+                        HorizontalTextAlignment="Center"
+                        FontSize="24"
+                        Margin="0,0,0,6"
+                        TextColor="#808080"
+                        Text="{x:Static util:IconFont.Cancel}"/>
+                    <Label FontFamily="PoppinsSemiBold" FontSize="16" TextColor="#808080" Text="Cancel" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label
+                        FontFamily="MaterialDesignIconsWebfont"
+                        HorizontalTextAlignment="Center"
+                        FontSize="24"
+                        Margin="0,0,0,6"
+                        TextColor="#10439F"
+                        Text="{x:Static util:IconFont.ContentSave}"/>
+                    <Label FontFamily="PoppinsSemiBold" FontSize="16" TextColor="#10439F" Text="Save" HorizontalTextAlignment="Center"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SaveNoteChangesCommand}"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentPage>

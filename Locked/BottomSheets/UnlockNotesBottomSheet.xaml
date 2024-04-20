@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+                   xmlns:util="clr-namespace:Locked.Utils"
+                   Background="#EEEEEE"
+                   x:Class="Locked.BottomSheets.UnlockNotesBottomSheet">
+    
+    <the49:BottomSheet.Detents>
+        <the49:HeightDetent Height="270" />
+    </the49:BottomSheet.Detents>
+    
+    <Grid RowDefinitions="Auto,Auto,Auto" Padding="18" RowSpacing="18">
+
+        <Label
+            FontFamily="MaterialDesignIconsWebfont"
+            HorizontalTextAlignment="End"
+            FontSize="24"
+            Margin="0,0,0,6"
+            TextColor="#222831"
+            Text="{x:Static util:IconFont.Close}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="CloseModalClicked"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Margin="0,36,0,0">
+            <Entry
+                IsPassword="True"
+                WidthRequest="240"
+                FontFamily="PoppinsSemiBold"
+                FontSize="16"
+                Keyboard="Numeric"
+                Text="{Binding Pass}"
+                TextColor="Black"
+                Placeholder="*****"
+                HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" Padding="18" VerticalOptions="Center">
+            <VerticalStackLayout>
+                <Label
+                    FontFamily="MaterialDesignIconsWebfont"
+                    HorizontalTextAlignment="Center"
+                    FontSize="24"
+                    Margin="0,0,0,6"
+                    TextColor="Black"
+                    Text="{x:Static util:IconFont.Cancel}"/>
+                <Label FontFamily="PoppinsSemiBold" FontSize="16" TextColor="Black" Text="Cancel" HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CloseModalClicked"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1">
+                <Label
+                    FontFamily="MaterialDesignIconsWebfont"
+                    HorizontalTextAlignment="Center"
+                    FontSize="24"
+                    Margin="0,0,0,6"
+                    TextColor="#10439F"
+                    Text="{x:Static util:IconFont.CellphoneKey}"/>
+                <Label FontFamily="PoppinsSemiBold" FontSize="16" TextColor="#10439F" Text="{Binding ConfirmMessage}" HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ValidatePassphraseClicked"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
+    
+</the49:BottomSheet>

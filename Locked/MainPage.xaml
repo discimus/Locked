@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:util="clr-namespace:Locked.Utils"
+             xmlns:viewmodels="clr-namespace:Locked.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Locked.MainPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,0,15,0" ColumnSpacing="12">
+            <Label
+                FontFamily="PoppinsSemiBold"
+                VerticalTextAlignment="Center"
+                FontSize="24"
+                TextColor="#10439F"
+                Text="Locked"/>
+            <Label
+                Grid.Column="1"
+                FontFamily="MaterialDesignIconsWebfont"
+                HorizontalTextAlignment="End"
+                VerticalTextAlignment="Center"
+                FontSize="32"
+                Margin="0,0,0,6"
+                IsVisible="{Binding IsLocked, Converter={StaticResource InvertedBoolConverter}}"
+                Text="{x:Static util:IconFont.Plus}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddNewNoteCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                Grid.Column="2"
+                FontFamily="MaterialDesignIconsWebfont"
+                HorizontalTextAlignment="End"
+                VerticalTextAlignment="Center"
+                FontSize="24"
+                Margin="0,0,0,6"
+                TextColor="#F27BBD"
+                Text="{Binding LockedIndicatorIcon}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UpdateLockedStateCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Shell.TitleView>
+        
+    <Grid VerticalOptions="FillAndExpand">
+        <VerticalStackLayout 
+            IsVisible="{Binding IsLocked}" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center">
+            <VerticalStackLayout>
+                <Label
+                    FontFamily="MaterialDesignIconsWebfont"
+                    HorizontalTextAlignment="Center"
+                    FontSize="24"
+                    Margin="0,0,0,6"
+                    Text="{x:Static util:IconFont.LockCheck}"/>
+                <Label 
+                    FontFamily="PoppinsSemiBold"
+                    Text="Locked"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UpdateLockedStateCommand}"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+        <ScrollView 
+            VerticalOptions="FillAndExpand"
+            IsVisible="{Binding IsLocked, Converter={StaticResource InvertedBoolConverter}}">
+            <CollectionView ItemsSource="{Binding Notes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="15" RowDefinitions="*,*" VerticalOptions="Start" Padding="15,9">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="{Binding Value}"/>
+                                <Label
+                                    Grid.Column="1"
+                                    Grid.RowSpan="2"
+                                    FontFamily="MaterialDesignIconsWebfont"
+                                    HorizontalTextAlignment="End"
+                                    VerticalTextAlignment="Start"
+                                    FontSize="24"
+                                    Margin="0,0,0,6"
+                                    TextColor="Gray"
+                                    Text="{x:Static util:IconFont.TrashCanOutline}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, Path=RemoveNoteCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label
+                                    Grid.Column="2"
+                                    Grid.RowSpan="2"
+                                    FontFamily="MaterialDesignIconsWebfont"
+                                    HorizontalTextAlignment="End"
+                                    VerticalTextAlignment="Start"
+                                    FontSize="24"
+                                    Margin="0,0,0,6"
+                                    TextColor="Gray"
+                                    Text="{x:Static util:IconFont.Pencil}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, Path=EditNoteCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label
+                                    Grid.ColumnSpan="3"
+                                    Grid.Row="1"
+                                    FontSize="12"
+                                    TextColor="#808080"
+                                    Text="{Binding CreatedAtParsed}"/>
+                            </Grid>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
